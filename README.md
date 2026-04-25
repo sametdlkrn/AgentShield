@@ -148,7 +148,11 @@ Copilot suggests code.
 AgentShield protects your project from AI mistakes.
 
 ━━━━━━━━━━━━━━━━━━━━━━━
+## 👨‍💻 Who is this for?
 
+- Developers using Cursor / Copilot / Codex
+- Indie hackers building fast with AI
+- Startups relying on AI-assisted coding
 ## 🔒 Use Cases
 
 - Solo developers using AI coding agents
@@ -240,7 +244,16 @@ Open VS Code and select the AgentShield shield icon. The sidebar shows:
 AI should accelerate development, not introduce hidden risk.
 
 ━━━━━━━━━━━━━━━━━━━━━━━
+## ⚡ Why AgentShield matters
 
+AI tools are fast.
+
+But they:
+- change things silently
+- break working code
+- introduce hidden risks
+
+AgentShield adds a safety layer between AI and your production code.
 ## 💰 Future Plans
 
 AgentShield is local-first today. Future plans may include:
