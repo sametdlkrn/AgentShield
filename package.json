@@ -26,11 +26,12 @@
   ],
   "type": "commonjs",
   "bin": {
-    "agentshield": "./dist/cli/index.js"
+    "agentshield": "./dist/cli.js"
   },
   "main": "./dist/vscode/extension.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prepare": "npm run build",
     "test": "vitest run",
     "check": "npm run build && npm test && npm run audit:runtime",
     "audit:runtime": "npm audit --omit=dev",

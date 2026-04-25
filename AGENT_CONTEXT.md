@@ -37,10 +37,10 @@ agentshield.config.json
 docs
 docs/
 docs/architecture.md
-docs/demo.png
 docs/output.png
 docs/risk-model.md
 docs/roadmap.md
+docs/vscode.png
 package-lock.json
 package.json
 resources
@@ -49,6 +49,7 @@ resources/shield.svg
 src
 src/
 src/cli
+src/cli.ts
 src/cli/
 src/cli/index.ts
 src/cli/output.ts
@@ -87,6 +88,7 @@ vitest.config.ts
 
 ## Important Commands
 - `npm run build`
+- `npm run prepare`
 - `npm run test`
 - `npm run check`
 - `npm run audit:runtime`
@@ -107,4 +109,4 @@ vitest.config.ts
 - `firebase.rules`
 
 ## Last Scan
-2026-04-25T16:01:37.412Z
+2026-04-25T16:34:14.021Z
