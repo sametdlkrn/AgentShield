@@ -263,6 +263,11 @@ AgentShield is local-first today. Future plans may include:
 - CI integration
 - organization policies
 - audit history
+- real-time guard mode
+- team policies
+- CI integration
+
+Join early → give feedback
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 
