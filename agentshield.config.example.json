@@ -1,0 +1,10 @@
+{
+  "protectedPaths": [
+    ".env",
+    "package.json",
+    "src/auth/**",
+    "src/payments/**",
+    "firebase.rules"
+  ],
+  "allowedRiskLevel": "MEDIUM"
+}

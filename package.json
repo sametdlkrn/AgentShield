@@ -1,0 +1,106 @@
+{
+  "name": "agentshield",
+  "version": "0.1.0",
+  "description": "A local AI developer safety tool for guarding projects from unsafe agent changes.",
+  "license": "MIT",
+  "author": "sametdlkrn",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sametdlkrn/AgentShield.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sametdlkrn/AgentShield/issues"
+  },
+  "homepage": "https://github.com/sametdlkrn/AgentShield#readme",
+  "keywords": [
+    "ai",
+    "agent",
+    "coding-agent",
+    "developer-tools",
+    "vscode-extension",
+    "cli",
+    "git",
+    "code-review",
+    "security",
+    "safety"
+  ],
+  "type": "commonjs",
+  "bin": {
+    "agentshield": "./dist/cli/index.js"
+  },
+  "main": "./dist/vscode/extension.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "check": "npm run build && npm test && npm run audit:runtime",
+    "audit:runtime": "npm audit --omit=dev",
+    "vscode:package": "npx @vscode/vsce package",
+    "vscode:install": "npm run build && npx @vscode/vsce package && code --install-extension agentshield-0.1.0.vsix --force"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
+    "picocolors": "^1.1.1",
+    "simple-git": "^3.27.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.10.2",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.2.1",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:agentshield.sidebar",
+    "onCommand:agentshield.scanProject",
+    "onCommand:agentshield.checkChanges",
+    "onCommand:agentshield.updateContext",
+    "onCommand:agentshield.explainRisk"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "agentshield",
+          "title": "AgentShield",
+          "icon": "resources/shield.svg"
+        }
+      ]
+    },
+    "views": {
+      "agentshield": [
+        {
+          "id": "agentshield.sidebar",
+          "name": "AgentShield"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "agentshield.scanProject",
+        "title": "AgentShield: Scan Project"
+      },
+      {
+        "command": "agentshield.checkChanges",
+        "title": "AgentShield: Check AI Changes"
+      },
+      {
+        "command": "agentshield.updateContext",
+        "title": "AgentShield: Update Context"
+      },
+      {
+        "command": "agentshield.explainRisk",
+        "title": "AgentShield: Explain Risk"
+      }
+    ]
+  }
+}
