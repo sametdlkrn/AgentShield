@@ -1,4 +1,5 @@
 import pc from "picocolors";
+import { AdvancedAnalysisResult } from "../core/advancedAnalyzer";
 import { CheckResult, RiskLevel, AgentTask, TaskOverlap } from "../core/types";
 import { isRiskAllowed } from "../core/risk";
 
@@ -260,4 +261,18 @@ export function printProtectedWarnings(result: CheckResult): void {
   }
 
   console.log(`- Destructive command pattern to review carefully on this OS: ${destructiveCommandExample()}`);
+}
+
+export function printAdvancedAnalysis(result: AdvancedAnalysisResult): void {
+  heading("AgentShield Analyze");
+  console.log("");
+  printBanner();
+  console.log("");
+  console.log("🧠 Advanced AI Analysis Enabled");
+  console.log("");
+  console.log(`Risk: ${result.risk} (${result.score}/100)`);
+  console.log("Reasons:");
+  for (const reason of result.reasons) {
+    console.log(`- ${reason}`);
+  }
 }

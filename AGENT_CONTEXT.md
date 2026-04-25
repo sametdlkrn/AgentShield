@@ -34,6 +34,10 @@ SECURITY.md
 agentshield-0.1.0.vsix
 agentshield.config.example.json
 agentshield.config.json
+analyzer
+analyzer/
+analyzer/analyzer.py
+analyzer/requirements.txt
 docs
 docs/
 docs/architecture.md
@@ -59,6 +63,7 @@ src/config/config.test.ts
 src/config/config.ts
 src/core
 src/core/
+src/core/advancedAnalyzer.ts
 src/core/explain.ts
 src/core/pathMatcher.test.ts
 src/core/pathMatcher.ts
@@ -109,4 +114,4 @@ vitest.config.ts
 - `firebase.rules`
 
 ## Last Scan
-2026-04-25T16:34:14.021Z
+2026-04-25T16:43:31.083Z

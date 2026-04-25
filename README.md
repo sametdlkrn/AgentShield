@@ -124,12 +124,45 @@ agentshield init
 agentshield scan
 agentshield update-context
 agentshield check
+agentshield analyze --ai
 agentshield check --json
 agentshield check --fail-on-risk
 agentshield explain
 agentshield revert-unrelated
 agentshield doctor
 ```
+
+## 🧠 Advanced AI Analysis (Pro)
+
+AgentShield now includes an optional Python-powered analysis engine.
+
+It provides:
+
+- deeper semantic understanding
+- better risk detection
+- smarter explanations
+
+Usage:
+
+```bash
+agentshield analyze --ai
+```
+
+If Python is not installed, AgentShield falls back to standard mode.
+
+## 🚀 Free vs Advanced
+
+Free:
+
+- basic risk detection
+- file protection
+- CLI checks
+
+Advanced (AI Mode):
+
+- deeper analysis
+- smarter explanations
+- future ML-based detection
 
 ## 💻 VS Code
 

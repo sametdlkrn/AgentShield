@@ -7,9 +7,11 @@ import { Command } from "commander";
 import pc from "picocolors";
 import simpleGit from "simple-git";
 import { loadConfig, writeDefaultConfig } from "../config/config";
+import { runAdvancedAnalyzer } from "../core/advancedAnalyzer";
 import { scanProject, writeContext } from "../core/projectScanner";
 import { checkChanges, isRiskAllowed } from "../core/risk";
 import { detectTaskOverlaps, ensureTasksFile, createTask, listTasks, completeTask } from "../core/tasks";
+import { getGitChanges } from "../git/gitClient";
 import { normalizeRoot } from "../utils/paths";
 import {
   formatProblem,
@@ -17,6 +19,7 @@ import {
   printCheckResult,
   printNoGitRepo,
   printBanner,
+  printAdvancedAnalysis,
   printProtectedWarnings,
   printTasks,
   riskLine,
@@ -161,6 +164,34 @@ async function revertUnrelated(root: string): Promise<void> {
   console.log(`Reverted ${tracked.length} tracked file(s).`);
 }
 
+async function analyze(root: string, useAi: boolean): Promise<void> {
+  const config = await loadConfig(root);
+  const result = await checkChanges(root, config);
+
+  if (!useAi) {
+    printCheckResult(result);
+    return;
+  }
+
+  const gitChanges = await getGitChanges(root);
+  if (!gitChanges.isGitRepo) {
+    printCheckResult(result);
+    return;
+  }
+
+  try {
+    const advanced = await runAdvancedAnalyzer({
+      diffText: gitChanges.diffText,
+      changedFiles: result.changedFiles
+    });
+    printAdvancedAnalysis(advanced);
+  } catch {
+    console.log("⚠️ Advanced AI analysis not available (Python not installed)");
+    console.log("");
+    printCheckResult(result);
+  }
+}
+
 const program = new Command();
 
 program
@@ -201,6 +232,12 @@ program
       process.exitCode = 2;
     }
   }));
+
+program
+  .command("analyze")
+  .description("Run standard or optional advanced AI analysis")
+  .option("--ai", "Enable optional Python-powered advanced analysis")
+  .action((options) => run(async () => analyze(normalizeRoot(program.opts().cwd), Boolean(options.ai))));
 
 program
   .command("doctor")
