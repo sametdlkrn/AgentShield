@@ -1,11 +1,20 @@
 # Risk Model
 
-AgentShield scores the current git diff from `0` to `100` and maps it to:
+AgentShield scores the current git diff from `0` to `100` with weighted local signals:
+
+- `.env`: `+70`
+- `package.json`: `+50`
+- lockfiles: `+20`
+- auth/payments paths: `+80`
+- config files: `+60`
+- large refactor/delete: `+30`
+
+The score is capped at `100` and maps to:
 
 - `LOW`: routine or no risky changes.
 - `MEDIUM`: scope drift or moderate risk.
 - `HIGH`: sensitive areas, dependency changes, broad edits, or large deletions.
-- `CRITICAL`: protected secrets/config changes or destructive file deletions.
+- `CRITICAL`: rare, high-confidence combinations of dangerous AI changes.
 
 ## Signals
 

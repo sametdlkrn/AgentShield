@@ -2,6 +2,7 @@ export type RiskLevel = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 
 export interface AgentShieldConfig {
   protectedPaths: string[];
+  ignorePaths: string[];
   allowedRiskLevel: RiskLevel;
 }
 

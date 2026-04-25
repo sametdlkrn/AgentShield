@@ -1,6 +1,13 @@
 node_modules/
 dist/
+build/
 coverage/
 *.vsix
 .vscode-test/
 npm-debug.log*
+.env
+.env.*
+!.env.example
+firebase.json
+serviceAccount.json
+serviceAccount*.json

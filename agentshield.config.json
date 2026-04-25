@@ -6,5 +6,12 @@
     "src/payments/**",
     "firebase.rules"
   ],
+  "ignorePaths": [
+    "node_modules/**",
+    ".git/**",
+    "dist/**",
+    "build/**",
+    ".next/**"
+  ],
   "allowedRiskLevel": "MEDIUM"
 }

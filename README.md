@@ -1,86 +1,155 @@
-# AgentShield
+# 🛡️ AgentShield
 
-**Your AI writes code. AgentShield makes sure it does not destroy your project.**
+## 🚨 Your AI writes code. We make sure it doesn’t destroy your project.
 
-AgentShield is a local-first CLI and VS Code extension that reviews AI coding agent changes before they become commits. It detects risky edits, protected file changes, unrelated work, dependency/config drift, and multi-agent task overlap using deterministic rules. No cloud backend. No payment flow. No AI API key.
+AI coding tools move fast. Sometimes too fast.
+
+AgentShield is a local CLI and VS Code safety layer for developers using AI coding agents. It scans git changes, detects risky AI behavior, protects critical files, and explains what could break before you commit.
+
+Built for solo developers, startup teams, and production codebases where an unexpected AI edit can become a real incident.
 
 [![CI](https://github.com/sametdlkrn/AgentShield/actions/workflows/ci.yml/badge.svg)](https://github.com/sametdlkrn/AgentShield/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-green.svg)](package.json)
 
-## Why This Exists
+━━━━━━━━━━━━━━━━━━━━━━━
 
-AI coding agents are fast, but they can also:
+## 🔥 What AgentShield Does
 
-- edit files outside the requested task,
-- rewrite auth, payment, or security code,
-- change dependencies without explaining why,
-- delete important logic,
-- drift across multiple agents working in the same repo.
+- Detects dangerous AI changes before commit
+- Protects critical files like `.env`, auth, payments, and config
+- Prevents hidden dependency risks in `package.json` and lockfiles
+- Explains why a change is risky in plain English
+- Warns when AI edits files outside the assigned agent scope
+- Keeps everything local first: no cloud, no API key, no backend
 
-AgentShield gives developers a lightweight guardrail before code reaches pull requests.
+━━━━━━━━━━━━━━━━━━━━━━━
 
-## Core Features
+## ⚠️ Real Example
 
-- **Project Context Engine**: creates and updates `AGENT_CONTEXT.md`.
-- **AI Change Safety Layer**: scores current git changes as `LOW`, `MEDIUM`, `HIGH`, or `CRITICAL`.
-- **Protected File System**: warns when configured sensitive paths change.
-- **Unrelated Change Detection**: compares changed files with active task scope.
-- **Multi-Agent Task Locking**: tracks agent scopes in `AGENT_TASKS.md`.
-- **VS Code Sidebar**: shows risk, changed files, protected warnings, and active tasks.
-- **CI-Friendly CLI**: supports JSON output and fail-on-risk policy checks.
+```bash
+AgentShield Check
 
-## Install
+🛡️ AgentShield v0.1
+AI Code Safety Layer Active
+
+🚨 CRITICAL RISK (100/100)
+Allowed: MEDIUM
+
+━━━━━━━━━━━━━━━━━━━
+
+⚠️ AI DETECTED A DANGEROUS CHANGE
+
+Problem:
+- AI modified protected file: package.json
+
+Why this is dangerous:
+- Dependency changes can break builds
+- May introduce vulnerabilities
+
+What you should do:
+- Run: agentshield explain
+- Review changes before commit
+
+━━━━━━━━━━━━━━━━━━━
+
+🛡️ AgentShield prevented a potential production issue.
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+## 📸 Visuals
+
+> Screenshot placeholder: AgentShield CLI detecting a dangerous dependency change.
+
+![AgentShield CLI screenshot placeholder](docs/demo.png)
+
+> Screenshot placeholder: AgentShield VS Code sidebar showing risk, changed files, and protected warnings.
+
+![AgentShield VS Code screenshot placeholder](docs/output.png)
+
+Real terminal output from AgentShield catching an unsafe AI change.
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+## ⚡ Quick Start
 
 ```bash
 npm install
 npm run build
 npm link
-```
 
-Initialize a repository:
-
-```bash
 agentshield init
 agentshield scan
 agentshield check
 ```
 
-## Quick Demo
+━━━━━━━━━━━━━━━━━━━━━━━
 
-```bash
-agentshield task create \
-  --agent codex \
-  --scope "Build settings UI" \
-  --files "src/ui/**,src/vscode/**" \
-  --summary "Keep this agent away from auth and payments"
+## 🧪 Example Workflow
+
+Windows PowerShell:
+
+```powershell
+git init
+echo SECRET=123 > .env
+git add .
+git commit -m "init"
+
+echo SECRET=HACKED > .env
 
 agentshield check
-agentshield explain
 ```
 
-Example output:
+macOS/Linux:
 
-```text
-AgentShield Check
-Risk: HIGH (70/100)
-Allowed: MEDIUM
-Policy: current risk exceeds allowedRiskLevel.
+```bash
+git init
+touch .env
+echo "SECRET=123" > .env
+git add .
+git commit -m "init"
 
-Affected files:
-- src/auth/session.ts [M +12/-2]
-- package.json [M +1/-1]
+echo "SECRET=HACKED" > .env
 
-Why:
-- src/auth/session.ts: Sensitive auth/payment/security area changed
-- package.json: Package or dependency file changed
-
-Suggested action:
-- Run: agentshield explain
-- Run: agentshield revert-unrelated
+agentshield check
 ```
 
-## CLI Commands
+AgentShield will flag the `.env` change because AI-modified environment files can break deployments or expose secrets.
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+## 💡 Why This Exists
+
+AI tools are excellent at writing code. They are not always excellent at respecting project boundaries.
+
+They can modify unrelated files, change dependencies, rewrite auth logic, touch payment flows, or silently alter deployment configuration. Developers need a safety layer that reviews AI changes before those changes become commits.
+
+AgentShield solves this with deterministic local checks, clear risk scoring, and human-readable explanations.
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+## 🎯 Positioning
+
+Cursor writes code.
+
+Copilot suggests code.
+
+AgentShield protects your project from AI mistakes.
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+## 🔒 Use Cases
+
+- Solo developers using AI coding agents
+- Startup teams shipping fast with AI assistance
+- Production systems with auth, payments, or secrets
+- CI protection for risky AI-generated diffs
+- Teams coordinating multiple agents in the same repository
+
+━━━━━━━━━━━━━━━━━━━━━━━
+
+## 🧰 CLI Commands
 
 ```bash
 agentshield init
@@ -92,12 +161,14 @@ agentshield check --fail-on-risk
 agentshield explain
 agentshield revert-unrelated
 agentshield doctor
-agentshield task create --agent codex --scope "UI sidebar" --files "src/ui/**,src/vscode/**"
+agentshield task create --agent codex --scope "UI work" --files "src/ui/**"
 agentshield task list
 agentshield task complete TASK-20260425120000
 ```
 
-## Configuration
+━━━━━━━━━━━━━━━━━━━━━━━
+
+## ⚙️ Configuration
 
 `agentshield.config.json`:
 
@@ -110,66 +181,69 @@ agentshield task complete TASK-20260425120000
     "src/payments/**",
     "firebase.rules"
   ],
+  "ignorePaths": [
+    "node_modules/**",
+    ".git/**",
+    "dist/**",
+    "build/**",
+    ".next/**"
+  ],
   "allowedRiskLevel": "MEDIUM"
 }
 ```
 
-## VS Code Extension
+Ignored paths are removed from affected files, scoring, and explanations.
 
-Build and install locally:
+━━━━━━━━━━━━━━━━━━━━━━━
+
+## 💻 VS Code
+
+Build and install the local extension:
 
 ```bash
 npm run vscode:install
 ```
 
-Open VS Code, select the AgentShield shield icon in the activity bar, and use:
+Open VS Code and select the AgentShield shield icon. The sidebar shows:
 
-- Scan Project
-- Check AI Changes
-- Update Context
-- Explain Risk
+- current risk score
+- changed files
+- protected file warnings
+- active AI task locks
+- scan, check, update context, and explain buttons
 
-During development, open this folder in VS Code and press `F5` to launch an Extension Development Host.
+━━━━━━━━━━━━━━━━━━━━━━━
 
-## CI Usage
+## 🚀 Roadmap
 
-Add AgentShield to a repository and fail builds when agent changes exceed policy:
+- Cloud sync
+- Team policies
+- Real-time guard mode
+- GitHub Action wrapper
+- Pull request comments
+- Cloud dashboard
 
-```bash
-agentshield check --fail-on-risk
-```
+━━━━━━━━━━━━━━━━━━━━━━━
 
-For automation and dashboards:
+## 🧠 Philosophy
 
-```bash
-agentshield check --json
-```
+AI should accelerate development, not introduce hidden risk.
 
-## Architecture
+━━━━━━━━━━━━━━━━━━━━━━━
 
-```text
-src/
-  cli/       commander CLI and premium terminal output
-  config/    zod config loading and defaults
-  core/      risk model, context scanner, task locking
-  git/       simple-git change collection
-  utils/     path normalization helpers
-  vscode/    VS Code webview sidebar
-```
+## 💰 Future Plans
 
-More detail:
+AgentShield is local-first today. Future plans may include:
 
-- [Architecture](docs/architecture.md)
-- [Risk model](docs/risk-model.md)
-- [Roadmap](docs/roadmap.md)
+- team plans
+- cloud dashboard
+- CI integration
+- organization policies
+- audit history
 
-## Positioning
+━━━━━━━━━━━━━━━━━━━━━━━
 
-AgentShield is the local safety layer for teams adopting AI coding agents. It helps developers and engineering managers review agent output, enforce task scope, protect sensitive files, and reduce accidental regressions before code reaches pull requests.
-
-Future paid tiers can add team policies, hosted dashboards, audit history, pull request checks, and cloud sync. The MVP intentionally stays local-first so the core trust model is simple and fast.
-
-## Development
+## 🛠️ Development
 
 ```bash
 npm install
@@ -177,10 +251,6 @@ npm run build
 npm test
 npm run check
 ```
-
-## Contributing
-
-Contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md) and keep changes scoped, deterministic, and easy to review.
 
 ## License
 

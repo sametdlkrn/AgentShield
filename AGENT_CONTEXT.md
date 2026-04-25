@@ -11,6 +11,7 @@ A local AI developer safety tool for guarding projects from unsafe agent changes
 
 ## Folder Structure
 ```text
+.gitattributes
 .github
 .github/
 .github/ISSUE_TEMPLATE
@@ -36,6 +37,8 @@ agentshield.config.json
 docs
 docs/
 docs/architecture.md
+docs/demo.png
+docs/output.png
 docs/risk-model.md
 docs/roadmap.md
 package-lock.json
@@ -104,4 +107,4 @@ vitest.config.ts
 - `firebase.rules`
 
 ## Last Scan
-2026-04-25T15:12:37.858Z
+2026-04-25T16:01:37.412Z

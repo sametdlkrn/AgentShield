@@ -14,6 +14,7 @@ describe("config loading", () => {
     const config = await loadConfig(root);
     expect(config.allowedRiskLevel).toBe("MEDIUM");
     expect(config.protectedPaths).toContain("package.json");
+    expect(config.ignorePaths).toContain("node_modules/**");
   });
 
   it("loads a valid config file", async () => {
@@ -23,10 +24,10 @@ describe("config loading", () => {
       allowedRiskLevel: "HIGH"
     });
 
-    await expect(loadConfig(root)).resolves.toEqual({
-      protectedPaths: ["src/auth/**"],
-      allowedRiskLevel: "HIGH"
-    });
+    const config = await loadConfig(root);
+    expect(config.protectedPaths).toEqual(["src/auth/**"]);
+    expect(config.allowedRiskLevel).toBe("HIGH");
+    expect(config.ignorePaths).toContain("node_modules/**");
   });
 
   it("writes the default config", async () => {

@@ -11,8 +11,17 @@ import { scanProject, writeContext } from "../core/projectScanner";
 import { checkChanges, isRiskAllowed } from "../core/risk";
 import { detectTaskOverlaps, ensureTasksFile, createTask, listTasks, completeTask } from "../core/tasks";
 import { normalizeRoot } from "../utils/paths";
-import { printCheckResult, printProtectedWarnings, printTasks, heading } from "./output";
-import { explainCheck } from "../core/explain";
+import {
+  formatProblem,
+  formatWhyItMatters,
+  printCheckResult,
+  printNoGitRepo,
+  printBanner,
+  printProtectedWarnings,
+  printTasks,
+  riskLine,
+  heading
+} from "./output";
 
 async function run(action: () => Promise<void>): Promise<void> {
   try {
@@ -72,18 +81,43 @@ function serializeCheckResult(result: Awaited<ReturnType<typeof checkChanges>>):
 async function explain(root: string): Promise<void> {
   const result = await checkChanges(root, await loadConfig(root));
   heading("AgentShield Explain");
-  console.log(`Risk: ${result.risk} (${result.score}/100)`);
   console.log("");
-  for (const line of explainCheck(result)) {
+  printBanner();
+  console.log("");
+
+  if (!result.isGitRepo) {
+    printNoGitRepo();
+    return;
+  }
+
+  console.log(riskLine(result.risk, result.score));
+  console.log(`Allowed: ${result.allowedRiskLevel}`);
+  console.log("");
+  console.log(pc.bold("Problem:"));
+  for (const line of formatProblem(result)) {
     console.log(`- ${line}`);
   }
-  if (result.unrelatedFiles.length) {
-    console.log("");
-    console.log(pc.bold("Unrelated candidates:"));
-    for (const file of result.unrelatedFiles) {
-      console.log(`- ${file}`);
-    }
+
+  console.log("");
+  console.log(pc.bold("Why this is dangerous:"));
+  for (const line of formatWhyItMatters(result)) {
+    console.log(`- ${line}`);
   }
+
+  console.log("");
+  console.log(pc.bold("What you should do:"));
+  if (result.risk === "LOW") {
+    console.log("- Review the diff, then continue.");
+  } else {
+    console.log("- Inspect the affected files before committing.");
+    console.log("- Run: agentshield check --json");
+  }
+
+  if (result.unrelatedFiles.length) {
+    console.log("- Run: agentshield revert-unrelated");
+  }
+  console.log("");
+  console.log("AgentShield prevented a potentially dangerous AI change.");
 }
 
 async function revertUnrelated(root: string): Promise<void> {
@@ -91,7 +125,7 @@ async function revertUnrelated(root: string): Promise<void> {
   heading("AgentShield Revert Unrelated");
 
   if (!result.isGitRepo) {
-    console.log(pc.yellow("This folder is not a git repository."));
+    printNoGitRepo();
     return;
   }
 
