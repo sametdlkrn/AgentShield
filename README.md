@@ -1,5 +1,15 @@
 # 🛡️ AgentShield
+ ## 🚨 Real AI Failure (Caught by AgentShield)
 
+AI modified `package.json` without context.
+
+🚨 CRITICAL RISK (100/100)
+
+This could:
+- break builds
+- introduce vulnerabilities
+
+🛡️ AgentShield stopped it before commit.
 ## 🚨 Your AI writes code. We make sure it doesn’t destroy your project.
 
 AI coding tools move fast. Sometimes too fast.
